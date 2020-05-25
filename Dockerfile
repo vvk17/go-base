@@ -1,7 +1,7 @@
 # Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
 #Start form the latest golang base image
-FROM golang:lates as builder
+FROM golang:latest as builder
 
 #Add Maintainer Info
 LABEL maintainer="vvk17 vvk17@mail.ru"
@@ -19,7 +19,7 @@ RUN go mod download
 COPY . .
 
 #Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-s -w" -o main .
 
 
 ###### Start a new stage with small image from scratch
